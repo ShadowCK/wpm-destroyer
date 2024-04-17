@@ -1,0 +1,29 @@
+{
+  "name": "wpm-destroyer",
+  "version": "1.0.0",
+  "main": "./src/main.js",
+  "type": "module",
+  "scripts": {
+    "build": "webpack --mode production",
+    "webpack": "webpack",
+    "webpackWatch": "webpack watch",
+    "pretest": "eslint ./src --fix",
+    "test": "echo \"Tests complete\""
+  },
+  "author": "Zhao Jin",
+  "license": "GPL-3.0",
+  "description": "",
+  "dependencies": {
+    "eventemitter3": "^5.0.1",
+    "jquery": "^3.7.1",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
