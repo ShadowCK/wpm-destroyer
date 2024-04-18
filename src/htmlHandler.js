@@ -55,6 +55,17 @@ const registerEvents = () => {
       settings.wordsPerLine = value;
     },
   });
+  $('#checkbox-practice-mode')
+    .checkbox()
+    .first()
+    .checkbox({
+      onChecked: () => {
+        settings.practiceMode = true;
+      },
+      onUnchecked() {
+        settings.practiceMode = false;
+      },
+    });
 };
 
 export default registerEvents;

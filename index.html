@@ -32,20 +32,21 @@
         <button id="exit-button" class="ui button" style="display: none">Exit</button>
       </div>
       <h2 class="ui header">Stats</h2>
-      <div>
+      <div class="ui large list">
         <p>Target WPM: <span id="target-wpm">40</span></p>
         <p>Current WPM: <span id="current-wpm">0</span></p>
         <p>Difficulty Level: <span id="difficulty-level">Easy</span></p>
       </div>
+      <div class="ui hidden divider"></div>
       <div class="ui segment" id="game-settings">
         <div class="ui header">Target WPM</div>
         <div class="ui labeled ticked slider" id="slider-target-wpm"></div>
         <div class="ui header">Words Per Line</div>
         <div class="ui labeled ticked slider" id="slider-words-per-line"></div>
         <div class="ui divider"></div>
-        <div class="ui big checkbox" id="checkbox-practice-mode">
+        <div class="ui large checkbox" id="checkbox-practice-mode">
           <input type="checkbox" name="practice-mode" />
-          <label>Practice Mode</label>
+          <label>Practice Mode (no adverserial AI)</label>
         </div>
       </div>
     </div>
