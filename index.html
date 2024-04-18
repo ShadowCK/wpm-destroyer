@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WPM Destroyer</title>
+    <!-- Semantic UI -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.js"></script>
+  </head>
+  <body>
+    <div class="ui container">
+      <h1 class="ui header">WPM Destroyer</h1>
+      <div id="text-display" class="ui segment" tabindex="0">
+        <div id="line1" class="line"></div>
+        <div id="line2" class="line"></div>
+        <div id="line3" class="line"></div>
+      </div>
+      <div>
+        <button id="start-button" class="ui button">Start</button>
+        <button id="exit-button" class="ui button" style="display: none">Exit</button>
+      </div>
+      <h2 class="ui header">Stats</h2>
+      <div>
+        <p>Target WPM: <span id="target-wpm">40</span></p>
+        <p>Current WPM: <span id="current-wpm">0</span></p>
+        <p>Difficulty Level: <span id="difficulty-level">Easy</span></p>
+      </div>
+    </div>
+    <script src="./dist/bundle.js"></script>
+  </body>
+</html>
