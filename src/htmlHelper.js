@@ -35,9 +35,12 @@ const getLine1HTML = () => {
   return html;
 };
 
-const updateWPMInfo = (wpm) => {
+const updatePerformanceInfo = ({ WPM, consistency, accuracy, difficulty }) => {
   $('#target-wpm').text(settings.targetWPM);
-  $('#current-wpm').text(wpm.toFixed(2));
+  $('#current-wpm').text(WPM.toFixed(2));
+  $('#accuracy').text(`${accuracy.toFixed(2)}%`);
+  $('#consistency').text(`${consistency.toFixed(2)}%`);
+  $('#difficulty').text(difficulty);
 };
 
 const updateLines = () => {
@@ -50,4 +53,4 @@ const clearLines = () => {
   $('#line1, #line2, #line3').text(`Let's start!`);
 };
 
-export { updateLines, clearLines, genLineContent, updateWPMInfo };
+export { updateLines, clearLines, genLineContent, updatePerformanceInfo };

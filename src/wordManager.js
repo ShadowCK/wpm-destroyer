@@ -6,6 +6,7 @@ import { Diffculty, EventType, GameState } from './enums.js';
 import { genLineContent } from './utils.js';
 import settings from './settings.js';
 import events from './events.js';
+import { getDifficulty } from './gameStateMachine.js';
 
 const getWords = (text) => text.split(/\r?\n/);
 
@@ -15,28 +16,61 @@ const WordList = {
   [Diffculty.hard]: getWords(hardWordsText),
 };
 
+// Time when player started typing, not started game
+let startTime = null;
+
 const currentLines = [];
+let userInput = '';
 
 let WPM = 0;
 let correctInputs = [];
 let correctLineInputs = [];
-let userInput = '';
+
+let consistencyTracker = [];
+const getConsitency = () => {
+  const mean =
+    consistencyTracker.reduce((acc, data) => acc + data.WPM, 0) / consistencyTracker.length;
+  const standardDeviation = Math.sqrt(
+    consistencyTracker.map((data) => (data.WPM - mean) ** 2).reduce((acc, val) => acc + val, 0) /
+      consistencyTracker.length,
+  );
+  // coefficient of variation in percentage, smaller is better
+  const cv = (standardDeviation / mean) * 100;
+  return cv || 0;
+};
+
+// Accuracy
+let correctChars = 0;
+let totalChars = 0;
+const getAccuracy = () => (correctChars / totalChars) * 100 || 0;
 
 const currentWordList = (difficulty) => WordList[difficulty];
 
-const calculateWPM = () => {
+const calculatePerformance = () => {
   const now = Date.now();
   correctInputs = correctInputs.filter((input) => now - input.time < settings.WPMTrackerDuration);
+  consistencyTracker = consistencyTracker.filter(
+    (data) => now - data.time < settings.consistencyTrackerDuration,
+  );
   if (correctInputs.length === 0) {
     WPM = 0;
-    events.emit(EventType.updateWPM, WPM);
-    return;
+  } else {
+    const timeTilFirstInput = now - correctInputs[0].time;
+    const minutesElapsed = timeTilFirstInput / 60000;
+    WPM = correctInputs.length / settings.charsPerWord / minutesElapsed;
   }
-  const timeTilFirstInput = now - correctInputs[0].time;
-  const minutesElapsed = timeTilFirstInput / 60000;
-  WPM = correctInputs.length / settings.charsPerWord / minutesElapsed;
-  console.log(correctInputs.length, minutesElapsed);
-  events.emit(EventType.updateWPM, WPM);
+  if (
+    now - startTime > settings.consistencyTrackerTimeHolder &&
+    totalChars > settings.consistencyTrackerCharHolder
+  ) {
+    consistencyTracker.push({ WPM, time: now });
+  }
+  events.emit(EventType.updatePerformanceMetrics, {
+    WPM,
+    accuracy: getAccuracy(),
+    consistency: getConsitency(),
+    difficulty: getDifficulty(),
+  });
 };
 
 const genWord = (difficulty) => {
@@ -74,6 +108,9 @@ const backspace = () => {
 };
 
 const addChar = (char, difficulty) => {
+  if (!startTime) {
+    startTime = Date.now();
+  }
   const line1Content = genLineContent(getLine(1));
   const index = userInput.length;
   if (userInput === line1Content) {
@@ -88,12 +125,19 @@ const addChar = (char, difficulty) => {
   if (userInput.length > line1Content.length) {
     return;
   }
+  // Correct input
   if (char === line1Content[index]) {
+    // Check if we already have a correct input at this index
+    // Don't count repeated correct inputs into WPM.
     if (correctLineInputs.findIndex((input) => input.index === userInput.length) === -1) {
       correctLineInputs.push({ index: userInput.length });
       correctInputs.push({ time: Date.now() });
     }
+    // However, count repeated correct inputs into accuracy
+    correctChars += 1;
   }
+  // Any input, correct, incorrect, or repeated
+  totalChars += 1;
 };
 
 const setUserInput = (input) => {
@@ -101,6 +145,11 @@ const setUserInput = (input) => {
 };
 
 const reset = () => {
+  startTime = null;
+  WPM = 0;
+  correctChars = 0;
+  totalChars = 0;
+  consistencyTracker = [];
   correctInputs = [];
   userInput = '';
   clearLines();
@@ -119,5 +168,7 @@ export {
   getUserInput,
   setUserInput,
   reset,
-  calculateWPM,
+  calculatePerformance,
+  getAccuracy,
+  getConsitency,
 };

@@ -15,7 +15,13 @@ const EventType = {
   finishGame: 'finishGame',
   userInput: 'userInput',
   typeChar: 'typeChar',
-  updateWPM: 'updateWPM',
+  updatePerformanceMetrics: 'updatePerformanceMetrics',
 };
 
-export { GameState, Diffculty, EventType };
+const AIMode = {
+  aggressive: 'aggressive',
+  stable: 'stable',
+  helping: 'helping',
+};
+
+export { GameState, Diffculty, EventType, AIMode };

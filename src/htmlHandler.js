@@ -1,6 +1,6 @@
 import { EventType } from './enums.js';
 import events from './events.js';
-import { updateLines, clearLines, updateWPMInfo } from './htmlHelper.js';
+import { updateLines, clearLines, updatePerformanceInfo } from './htmlHelper.js';
 import settings from './settings.js';
 
 const registerEvents = () => {
@@ -26,8 +26,8 @@ const registerEvents = () => {
     updateLines();
   });
 
-  events.on(EventType.updateWPM, (WPM) => {
-    updateWPMInfo(WPM);
+  events.on(EventType.updatePerformanceMetrics, (data) => {
+    updatePerformanceInfo(data);
   });
 
   $('#start-button').click(() => events.emit(EventType.startGame, { isCancelled: false }));
