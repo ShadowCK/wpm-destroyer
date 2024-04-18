@@ -3,8 +3,7 @@ import mediumWordsText from './English200.txt';
 import hardWordsText from './English1000.txt';
 
 import { Diffculty } from './enums.js';
-import { genLineContent } from './htmlHelper.js';
-import { getDifficulty } from './gameStateMachine.js';
+import { genLineContent } from './utils.js';
 
 const getWords = (text) => text.split(/\r?\n/);
 
@@ -54,12 +53,12 @@ const backspace = () => {
   userInput = userInput.substring(0, userInput.length - 1);
 };
 
-const addChar = (char) => {
-  if (userInput === genLineContent(1)) {
+const addChar = (char, difficulty) => {
+  if (userInput === genLineContent(getLine(1))) {
     // Proceed to next line
     userInput = '';
     currentLines.shift();
-    addLine(getDifficulty());
+    addLine(difficulty);
     return;
   }
   userInput += char;

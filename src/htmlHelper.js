@@ -1,10 +1,9 @@
 import { getLine, getUserInput } from './wordManager.js';
-
-const genLineContent = (num) => getLine(num).join(' ');
+import { genLineContent } from './utils.js';
 
 const getLine1HTML = () => {
   const userInput = getUserInput();
-  const line1 = genLineContent(1);
+  const line1 = genLineContent(getLine(1));
   let html = '';
   const shorter = Math.min(userInput.length, line1.length);
   const longer = Math.max(userInput.length, line1.length);
@@ -25,8 +24,8 @@ const getLine1HTML = () => {
 
 const updateLines = () => {
   $('#line1').html(getLine1HTML());
-  $('#line2').text(genLineContent(2));
-  $('#line3').text(genLineContent(3));
+  $('#line2').text(genLineContent(getLine(2)));
+  $('#line3').text(genLineContent(getLine(3)));
 };
 
 const clearLines = () => {

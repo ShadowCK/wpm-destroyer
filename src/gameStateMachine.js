@@ -55,7 +55,7 @@ const registerEvents = () => {
     }
     // Space or letter
     else {
-      addChar(event.key);
+      addChar(event.key, currentDifficulty);
     }
     // Tell HTML to update
     events.emit(EventType.typeChar);
