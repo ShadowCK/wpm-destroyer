@@ -15,6 +15,8 @@ const settings = {
   highConsistencyThreshold: 20, // 20% CV considered high consistency
   accuracyThreshold: 85, // 85% accuracy is considered acceptable
   withinThresholdPercentage: 75, // 75% of WPM records within target range considered stable
+  minAIActionDelay: 2000,
+  maxAIActionDelay: 6000,
 };
 
 export default settings;

@@ -184,4 +184,6 @@ export {
   getAccuracy,
   getConsitency,
   calcWithinThresholdPercentage,
+  currentLines,
+  genWord,
 };
