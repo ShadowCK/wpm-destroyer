@@ -46,6 +46,17 @@ const getAccuracy = () => (correctChars / totalChars) * 100 || 0;
 
 const currentWordList = (difficulty) => WordList[difficulty];
 
+const calcWithinThresholdPercentage = () => {
+  const withinThresholdCount = consistencyTracker.filter((data) => {
+    const { recordedWPM } = data;
+    return (
+      recordedWPM < settings.targetWPM + settings.WPMThreshold &&
+      recordedWPM > settings.targetWPM - settings.WPMThreshold
+    );
+  }).length;
+  return (withinThresholdCount / consistencyTracker.length) * 100; // Return as percentage
+};
+
 const calculatePerformance = () => {
   const now = Date.now();
   correctInputs = correctInputs.filter((input) => now - input.time < settings.WPMTrackerDuration);
@@ -70,6 +81,7 @@ const calculatePerformance = () => {
     accuracy: getAccuracy(),
     consistency: getConsitency(),
     difficulty: getDifficulty(),
+    withinThresholdPercentage: calcWithinThresholdPercentage(),
   });
 };
 
@@ -171,4 +183,5 @@ export {
   calculatePerformance,
   getAccuracy,
   getConsitency,
+  calcWithinThresholdPercentage,
 };
