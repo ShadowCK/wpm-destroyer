@@ -16,7 +16,7 @@
   <body>
     <div class="ui container">
       <h1 class="ui header">WPM Destroyer</h1>
-      <div id="text-display" class="ui segment" tabindex="0">
+      <div class="ui big segments">
         <div class="ui segment">
           <div id="line1" class="line">Let's start!</div>
         </div>
@@ -36,6 +36,17 @@
         <p>Target WPM: <span id="target-wpm">40</span></p>
         <p>Current WPM: <span id="current-wpm">0</span></p>
         <p>Difficulty Level: <span id="difficulty-level">Easy</span></p>
+      </div>
+      <div class="ui segment" id="game-settings">
+        <div class="ui header">Target WPM</div>
+        <div class="ui labeled ticked slider" id="slider-target-wpm"></div>
+        <div class="ui header">Words Per Line</div>
+        <div class="ui labeled ticked slider" id="slider-words-per-line"></div>
+        <div class="ui divider"></div>
+        <div class="ui big checkbox" id="checkbox-practice-mode">
+          <input type="checkbox" name="practice-mode" />
+          <label>Practice Mode</label>
+        </div>
       </div>
     </div>
     <script src="./dist/bundle.js"></script>

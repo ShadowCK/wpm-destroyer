@@ -17,7 +17,6 @@ const WordList = {
 
 const currentLines = [];
 
-let startTimestamp = null;
 let WPM = 0;
 let correctInputs = [];
 let correctLineInputs = [];
@@ -48,7 +47,7 @@ const genWord = (difficulty) => {
 // Function to generate a line of words based on difficulty
 const genWordsForLine = (difficulty) => {
   const words = [];
-  for (let i = 0; i < 10; i += 1) {
+  for (let i = 0; i < settings.wordsPerLine; i += 1) {
     words.push(genWord(difficulty));
   }
   return words;
@@ -102,7 +101,7 @@ const setUserInput = (input) => {
 };
 
 const reset = () => {
-  startTimestamp = Date.now();
+  correctInputs = [];
   userInput = '';
   clearLines();
 };
