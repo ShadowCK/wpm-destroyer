@@ -2,8 +2,10 @@ import easyWordsText from './English100.txt';
 import mediumWordsText from './English200.txt';
 import hardWordsText from './English1000.txt';
 
-import { Diffculty } from './enums.js';
+import { Diffculty, EventType, GameState } from './enums.js';
 import { genLineContent } from './utils.js';
+import settings from './settings.js';
+import events from './events.js';
 
 const getWords = (text) => text.split(/\r?\n/);
 
@@ -15,9 +17,28 @@ const WordList = {
 
 const currentLines = [];
 
+let startTimestamp = null;
+let WPM = 0;
+let correctInputs = [];
+let correctLineInputs = [];
 let userInput = '';
 
 const currentWordList = (difficulty) => WordList[difficulty];
+
+const calculateWPM = () => {
+  const now = Date.now();
+  correctInputs = correctInputs.filter((input) => now - input.time < settings.WPMTrackerDuration);
+  if (correctInputs.length === 0) {
+    WPM = 0;
+    events.emit(EventType.updateWPM, WPM);
+    return;
+  }
+  const timeTilFirstInput = now - correctInputs[0].time;
+  const minutesElapsed = timeTilFirstInput / 60000;
+  WPM = correctInputs.length / settings.charsPerWord / minutesElapsed;
+  console.log(correctInputs.length, minutesElapsed);
+  events.emit(EventType.updateWPM, WPM);
+};
 
 const genWord = (difficulty) => {
   const wordList = currentWordList(difficulty);
@@ -54,15 +75,26 @@ const backspace = () => {
 };
 
 const addChar = (char, difficulty) => {
-  if (userInput === genLineContent(getLine(1))) {
+  const line1Content = genLineContent(getLine(1));
+  const index = userInput.length;
+  if (userInput === line1Content) {
     // Proceed to next line
+    correctLineInputs = [];
     userInput = '';
     currentLines.shift();
     addLine(difficulty);
     return;
   }
   userInput += char;
-  console.log(userInput);
+  if (userInput.length > line1Content.length) {
+    return;
+  }
+  if (char === line1Content[index]) {
+    if (correctLineInputs.findIndex((input) => input.index === userInput.length) === -1) {
+      correctLineInputs.push({ index: userInput.length });
+      correctInputs.push({ time: Date.now() });
+    }
+  }
 };
 
 const setUserInput = (input) => {
@@ -70,6 +102,7 @@ const setUserInput = (input) => {
 };
 
 const reset = () => {
+  startTimestamp = Date.now();
   userInput = '';
   clearLines();
 };
@@ -87,4 +120,5 @@ export {
   getUserInput,
   setUserInput,
   reset,
+  calculateWPM,
 };

@@ -15,6 +15,7 @@ const EventType = {
   finishGame: 'finishGame',
   userInput: 'userInput',
   typeChar: 'typeChar',
+  updateWPM: 'updateWPM',
 };
 
 export { GameState, Diffculty, EventType };

@@ -1,6 +1,6 @@
 import { EventType } from './enums.js';
 import events from './events.js';
-import { updateLines, clearLines } from './htmlHelper.js';
+import { updateLines, clearLines, updateWPMInfo } from './htmlHelper.js';
 
 const registerEvents = () => {
   events.on(EventType.startGame, (eventData) => {
@@ -23,6 +23,10 @@ const registerEvents = () => {
 
   events.on(EventType.typeChar, () => {
     updateLines();
+  });
+
+  events.on(EventType.updateWPM, (WPM) => {
+    updateWPMInfo(WPM);
   });
 
   $('#start-button').click(() => events.emit(EventType.startGame, { isCancelled: false }));

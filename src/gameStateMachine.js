@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { GameState, Diffculty, EventType } from './enums.js';
 import events from './events.js';
-import { addChar, addLine, backspace, reset } from './wordManager.js';
+import { addChar, addLine, backspace, calculateWPM, reset } from './wordManager.js';
 
 let currentState = GameState.initial;
 let currentDifficulty = Diffculty.easy;
@@ -60,6 +60,7 @@ const registerEvents = () => {
     // Tell HTML to update
     events.emit(EventType.typeChar);
   });
+  setInterval(calculateWPM, 5);
 };
 
 window.getState = getState;
