@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { GameState, Diffculty, EventType } from './enums.js';
 import events from './events.js';
-import { addChar, backspace, clearLines, genLine } from './wordManager.js';
+import { addChar, addLine, backspace, reset } from './wordManager.js';
 
 let currentState = GameState.initial;
 let currentDifficulty = Diffculty.easy;
@@ -18,9 +18,10 @@ const startGame = (eventData) => {
     }
     return;
   }
+  reset();
   currentDifficulty = Diffculty.easy;
   currentState = GameState.playing;
-  _.times(3, () => genLine(currentDifficulty));
+  _.times(3, () => addLine(currentDifficulty));
   console.log('Starting game');
 };
 
@@ -33,7 +34,7 @@ const finishGame = (eventData) => {
     return;
   }
   currentState = GameState.finished;
-  clearLines();
+  reset();
   console.log('Finishing game');
 };
 
@@ -45,7 +46,7 @@ const registerEvents = () => {
       return;
     }
     // Check if it's a valid key
-    if (event.which !== 8 && event.which < 65 && event.which > 90 && event.which !== 32) {
+    if (event.which !== 8 && (event.which < 65 || event.which > 90) && event.which !== 32) {
       return;
     }
     // Backspace
