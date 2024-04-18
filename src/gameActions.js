@@ -35,14 +35,22 @@ const addExtraSpaces = () => {
 };
 
 const simplifyWords = () => {
-  if (currentLines.length > 0) {
-    const lineIndex = Math.floor(Math.random() * currentLines.length);
+  // Ensure there is more than one line to choose from
+  if (currentLines.length > 1) {
+    // Avoid modifying the first line
+    const lineIndex = Math.floor(Math.random() * (currentLines.length - 1)) + 1;
     const wordIndex = Math.floor(Math.random() * currentLines[lineIndex].length);
     // Generate a simple word to replace
     currentLines[lineIndex][wordIndex] = genWord(Diffculty.easy);
-    console.log("Providing simpler vocabulary to increase player's success.");
+    console.log(
+      `Providing simpler vocabulary to increase player's success in line ${lineIndex + 1}`,
+    );
+  } else if (currentLines.length === 1) {
+    // If there's only one line and it's the first one, do nothing
+    console.log('Only one line present; no replacement made to avoid affecting the first line.');
   }
 };
+
 const provideHints = () => {
   // TODO: unimplemented, hints are likely useless? Maybe display the first letter very large in some place
   // console.log('Offering first letter hints to assist the player.');

@@ -41,7 +41,7 @@ const applyAIBehavior = () => {
 
     // After action is executed, clear the timer and reset aiActionTimer to allow new actions
     aiActionTimer = null;
-    console.log(`AI Action executed: ${aiState}`);
+    console.log(`AI Action executed in ${aiState} state.`);
   }, settings.minAIActionDelay + Math.random() * (settings.maxAIActionDelay - settings.minAIActionDelay));
 };
 
