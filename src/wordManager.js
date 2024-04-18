@@ -48,13 +48,13 @@ const currentWordList = (difficulty) => WordList[difficulty];
 
 const calcWithinThresholdPercentage = () => {
   const withinThresholdCount = consistencyTracker.filter((data) => {
-    const { recordedWPM } = data;
+    const { WPM: recordedWPM } = data;
     return (
       recordedWPM < settings.targetWPM + settings.WPMThreshold &&
       recordedWPM > settings.targetWPM - settings.WPMThreshold
     );
   }).length;
-  return (withinThresholdCount / consistencyTracker.length) * 100; // Return as percentage
+  return (withinThresholdCount / consistencyTracker.length) * 100 || 0; // Return as percentage
 };
 
 const calculatePerformance = () => {

@@ -35,12 +35,19 @@ const getLine1HTML = () => {
   return html;
 };
 
-const updatePerformanceInfo = ({ WPM, consistency, accuracy, difficulty }) => {
+const updatePerformanceInfo = ({
+  WPM,
+  consistency,
+  accuracy,
+  difficulty,
+  withinThresholdPercentage,
+}) => {
   $('#target-wpm').text(settings.targetWPM);
   $('#current-wpm').text(WPM.toFixed(2));
   $('#accuracy').text(`${accuracy.toFixed(2)}%`);
   $('#consistency').text(`${consistency.toFixed(2)}%`);
   $('#difficulty').text(difficulty);
+  $('#within-threshold').text(`${withinThresholdPercentage.toFixed(2)}%`);
 };
 
 const updateLines = () => {

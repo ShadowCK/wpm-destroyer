@@ -4,11 +4,15 @@ import events from './events.js';
 import { addChar, addLine, backspace, calculatePerformance, reset } from './wordManager.js';
 
 let currentState = GameState.initial;
-let currentDifficulty = Diffculty.easy;
+let currentDifficulty = Diffculty.medium;
 
 const getState = () => currentState;
 
 const getDifficulty = () => currentDifficulty;
+
+const setDifficulty = (difficulty) => {
+  currentDifficulty = difficulty;
+};
 
 const startGame = (eventData) => {
   if (currentState !== GameState.finished && currentState !== GameState.initial) {
@@ -19,7 +23,7 @@ const startGame = (eventData) => {
     return;
   }
   reset();
-  currentDifficulty = Diffculty.easy;
+  currentDifficulty = Diffculty.medium;
   currentState = GameState.playing;
   _.times(3, () => addLine(currentDifficulty));
   console.log('Starting game');
@@ -65,4 +69,4 @@ const registerEvents = () => {
 
 window.getState = getState;
 
-export { getState, getDifficulty, registerEvents };
+export { getState, getDifficulty, registerEvents, setDifficulty };

@@ -14,6 +14,18 @@
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.js"></script>
   </head>
   <body>
+    <div id="metricsModal" class="ui overlay fullscreen modal">
+      <i class="close icon"></i>
+      <div class="header">Your Metrics</div>
+      <div class="content">
+        <!-- Canvas for Chart.js -->
+        <canvas id="metricsChart"></canvas>
+      </div>
+      <div class="actions">
+        <div class="ui green ok button">OK</div>
+      </div>
+    </div>
+
     <div class="ui container">
       <h1 class="ui header">WPM Destroyer</h1>
       <div class="ui big segments">
@@ -37,7 +49,8 @@
         <p>Current WPM: <span id="current-wpm">0</span></p>
         <p>Accuracy: <span id="accuracy">0</span></p>
         <p>Inconsistency: <span id="consistency">0</span></p>
-        <p>Difficulty: <span id="difficulty-level">Easy</span></p>
+        <p>Difficulty: <span id="difficulty">medium</span></p>
+        <p>Within threshold percentage: <span id="within-threshold">0</span></p>
       </div>
       <div class="ui hidden divider"></div>
       <div class="ui segment" id="game-settings">
