@@ -41,12 +41,14 @@ const updatePerformanceInfo = ({
   accuracy,
   difficulty,
   withinThresholdPercentage,
+  aiMode,
 }) => {
   $('#target-wpm').text(settings.targetWPM);
   $('#current-wpm').text(WPM.toFixed(2));
   $('#accuracy').text(`${accuracy.toFixed(2)}%`);
   $('#consistency').text(`${consistency.toFixed(2)}%`);
   $('#difficulty').text(difficulty);
+  $('#ai-mode').text(aiMode);
   $('#within-threshold').text(`${withinThresholdPercentage.toFixed(2)}%`);
 };
 

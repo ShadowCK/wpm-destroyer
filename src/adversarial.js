@@ -82,4 +82,6 @@ const registerEvents = () => {
   });
 };
 
-export { registerEvents };
+const getAIMode = () => aiState;
+
+export { registerEvents, getAIMode };

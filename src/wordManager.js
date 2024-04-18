@@ -7,6 +7,7 @@ import { genLineContent } from './utils.js';
 import settings from './settings.js';
 import events from './events.js';
 import { getDifficulty } from './gameStateMachine.js';
+import { getAIMode } from './adversarial.js';
 
 const getWords = (text) => text.split(/\r?\n/);
 
@@ -82,6 +83,7 @@ const calculatePerformance = () => {
     consistency: getConsitency(),
     difficulty: getDifficulty(),
     withinThresholdPercentage: calcWithinThresholdPercentage(),
+    aiMode: getAIMode(),
   });
 };
 
